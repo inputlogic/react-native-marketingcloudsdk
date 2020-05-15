@@ -29,20 +29,18 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-export class MCReactModule {
-    static isPushEnabled(): Promise<boolean>;
-    static enablePush(): void;
-    static disablePush(): void;
-    static getSystemToken(): Promise<string>;
-    static getAttributes(): Promise<Map<string, string>>;
-    static setAttribute(key: string, value: string): void;
-    static clearAttribute(key: string): void;
-    static addTag(tag: string): void;
-    static removeTag(tag: string): void;
-    static getTags(): Promise<Array<string>>;
-    static setContactKey(contactKey: string): void;
-    static getContactKey(): Promise<string>;
-    static enableVerboseLogging(): void;
-    static disableVerboseLogging(): void;
-    static logSdkState(): void;
-}
+export function isPushEnabled(): Promise<boolean>;
+export function enablePush(): void;
+export function disablePush(): void;
+export function getSystemToken(): Promise<string>;
+export function getAttributes(): Promise<Map<string, string>>;
+export function setAttribute(key: string, value: string): void;
+export function clearAttribute(key: string): void;
+export function addTag(tag: string): void;
+export function removeTag(tag: string): void;
+export function getTags(): Promise<Array<string>>;
+export function setContactKey(contactKey: string): void;
+export function getContactKey(): Promise<string>;
+export function enableVerboseLogging(): void;
+export function disableVerboseLogging(): void;
+export function logSdkState(): void;
