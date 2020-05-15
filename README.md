@@ -164,6 +164,7 @@ The current state of the pushEnabled flag in the native Marketing Cloud
 SDK.
 
 **Kind**: function
+
 **Returns**: <code>Promise.&lt;boolean&gt;</code> - A promise to the boolean representation of whether push is
     enabled.  
 **See**
@@ -177,6 +178,7 @@ SDK.
 Enables push messaging in the native Marketing Cloud SDK.
 
 **Kind**: function
+
 **See**
 
 - [Android Docs](https://salesforce-marketingcloud.github.io/MarketingCloudSDK-Android/javadocs/6.0/reference/com/salesforce/marketingcloud/messages/push/PushMessageManager.html#enablePush())
@@ -188,6 +190,7 @@ Enables push messaging in the native Marketing Cloud SDK.
 Disables push messaging in the native Marketing Cloud SDK.
 
 **Kind**: function
+
 **See**
 
 - [Android Docs](https://salesforce-marketingcloud.github.io/MarketingCloudSDK-Android/javadocs/6.0/reference/com/salesforce/marketingcloud/messages/push/PushMessageManager.html#disablePush())
@@ -200,6 +203,7 @@ Returns the token used by the Marketing Cloud to send push messages to
 the device.
 
 **Kind**: function
+
 **Returns**: <code>Promise.&lt;?string&gt;</code> - A promise to the system token string.  
 **See**
 
@@ -212,6 +216,7 @@ the device.
 Returns the maps of attributes set in the registration.
 
 **Kind**: function  
+
 **Returns**: <code>Promise.&lt;Object.&lt;string, string&gt;&gt;</code> - A promise to the key/value map of attributes set
     in the registration.  
 **See**
@@ -225,6 +230,7 @@ Returns the maps of attributes set in the registration.
 Sets the value of an attribute in the registration.
 
 **Kind**: function 
+
 **See**
 
 - [Android Docs](https://salesforce-marketingcloud.github.io/MarketingCloudSDK-Android/javadocs/6.0/reference/com/salesforce/marketingcloud/registration/RegistrationManager.Editor.html#setAttribute(java.lang.String,%20java.lang.String))
@@ -242,6 +248,7 @@ Sets the value of an attribute in the registration.
 Clears the value of an attribute in the registration.
 
 **Kind**: function
+
 **See**
 
 - [Android Docs](https://salesforce-marketingcloud.github.io/MarketingCloudSDK-Android/javadocs/6.0/reference/com/salesforce/marketingcloud/registration/RegistrationManager.Editor.html#clearAttribute(java.lang.String))
@@ -256,6 +263,7 @@ Clears the value of an attribute in the registration.
 
 ### addTag(tag)
 **Kind**: function
+
 **See**
 
 - [Android Docs](https://salesforce-marketingcloud.github.io/MarketingCloudSDK-Android/javadocs/6.0/reference/com/salesforce/marketingcloud/registration/RegistrationManager.Editor.html#addTag(java.lang.String))
@@ -270,6 +278,7 @@ Clears the value of an attribute in the registration.
 
 ### removeTag(tag)
 **Kind**: function
+
 **See**
 
 - [Android Docs](https://salesforce-marketingcloud.github.io/MarketingCloudSDK-Android/javadocs/6.0/reference/com/salesforce/marketingcloud/registration/RegistrationManager.Editor.html#removeTag(java.lang.String))
@@ -286,6 +295,7 @@ Clears the value of an attribute in the registration.
 Returns the tags currently set on the device.
 
 **Kind**: function 
+
 **Returns**: <code>Promise.&lt;Array.&lt;string&gt;&gt;</code> - A promise to the array of tags currently set in the native SDK.  
 **See**
 
@@ -298,6 +308,7 @@ Returns the tags currently set on the device.
 Sets the contact key for the device's user.
 
 **Kind**: function
+
 **See**
 
 - [Android Docs](https://salesforce-marketingcloud.github.io/MarketingCloudSDK-Android/javadocs/6.0/reference/com/salesforce/marketingcloud/registration/RegistrationManager.Editor.html#setContactKey(java.lang.String))
@@ -314,6 +325,7 @@ Sets the contact key for the device's user.
 Returns the contact key currently set on the device.
 
 **Kind**: function
+
 **Returns**: <code>Promise.&lt;?string&gt;</code> - A promise to the current contact key.  
 **See**
 
@@ -326,6 +338,7 @@ Returns the contact key currently set on the device.
 Enables verbose logging within the native Marketing Cloud SDK.
 
 **Kind**: function
+
 **See**
 
 - [Android Docs](https://salesforce-marketingcloud.github.io/MarketingCloudSDK-Android/javadocs/6.0/reference/com/salesforce/marketingcloud/MarketingCloudSdk.html#setLogLevel(int))
@@ -337,6 +350,7 @@ Enables verbose logging within the native Marketing Cloud SDK.
 Disables verbose logging within the native Marketing Cloud SDK.
 
 **Kind**: function
+
 **See**
 
 - [Android Docs](https://salesforce-marketingcloud.github.io/MarketingCloudSDK-Android/javadocs/6.0/reference/com/salesforce/marketingcloud/MarketingCloudSdk.html#setLogLevel(int))
