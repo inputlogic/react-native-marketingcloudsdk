@@ -16,10 +16,15 @@ npm install react-native-marketingcloudsdk --save
 
 ### Android Setup
 
-#### 1. Add Marketing Cloud SDK repository
+#### 1. Add Marketing Cloud SDK repository & update minSdkVersion
 
 `android/build.gradle`
 ```groovy
+ext {
+        // ...
+        minSdkVersion = 21
+// ...
+
 allprojects {
     repositories {
         maven { url "https://salesforce-marketingcloud.github.io/MarketingCloudSDK-Android/repository" }
@@ -47,9 +52,14 @@ buildscript {
   }
 }
 ```
-3. Apply the plugin
+3. Implement the SDK & apply the plugin
 `android/app/build.gradle`
 ```groovy
+dependencies {
+    // ...
+    implementation 'com.salesforce.marketingcloud:marketingcloudsdk:7.1.0'
+    // ...
+
 // Add the following line to the bottom of the file:
 apply plugin: 'com.google.gms.google-services'
 ```
@@ -57,6 +67,14 @@ apply plugin: 'com.google.gms.google-services'
 #### 3. Configure the SDK in your MainApplication.java class
 
 ```java
+import android.util.Log;
+
+import com.salesforce.marketingcloud.MarketingCloudConfig;
+import com.salesforce.marketingcloud.MarketingCloudSdk;
+import com.salesforce.marketingcloud.notifications.NotificationCustomizationOptions;
+
+// ...
+
 @Override
 public void onCreate() {
     super.onCreate();
@@ -80,7 +98,14 @@ public void onCreate() {
 
 #### 1. Install pod for Marketing Cloud SDK
 
-```shell
+You will have to go into xcode, under the General tab of your project, make sure that you have your target set to iOS 10.0. Then, you'll want to go into `ios/Podfile` and make sure and update the platform to `platform: ios, '10.0'`. 
+
+Once that is done, run `pod install`. *Note* - if you previously installed pods and run into issues you may have to run:
+```
+pod deintegrate
+cd ..
+rm -rf node_modules
+npm install
 cd ios
 pod install
 ```
@@ -88,6 +113,10 @@ pod install
 #### 2. Configure the SDK in your AppDelegate.m class
 
 ```objc
+#import "MarketingCloudSDK/MarketingCloudSDK.h"
+
+// ...
+
 - (BOOL)application:(UIApplication *)application
     didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
@@ -112,32 +141,29 @@ Follow [these instructions](./ios_push.md) to enable push for iOS.
 
 ## API Reference <a name="reference"></a>
 
-**Kind**: global class  
+* [isPushEnabled()](#isPushEnabled) ⇒ <code>Promise.&lt;boolean&gt;</code>
+* [enablePush()](#enablePush)
+* [disablePush()](#disablePush)
+* [getSystemToken()](#getSystemToken) ⇒ <code>Promise.&lt;?string&gt;</code>
+* [getAttributes()](#getAttributes) ⇒ <code>Promise.&lt;Object.&lt;string, string&gt;&gt;</code>
+* [setAttribute(key, value)](#setAttribute)
+* [clearAttribute(key)](#clearAttribute)
+* [addTag(tag)](#addTag)
+* [removeTag(tag)](#removeTag)
+* [getTags()](#getTags) ⇒ <code>Promise.&lt;Array.&lt;string&gt;&gt;</code>
+* [setContactKey(contactKey)](#setContactKey)
+* [getContactKey()](#getContactKey) ⇒ <code>Promise.&lt;?string&gt;</code>
+* [enableVerboseLogging()](#enableVerboseLogging)
+* [disableVerboseLogging()](#disableVerboseLogging)
+* [logSdkState()](#logSdkState)
 
-* [MCReactModule](#MCReactModule)
-    * [.isPushEnabled()](#MCReactModule.isPushEnabled) ⇒ <code>Promise.&lt;boolean&gt;</code>
-    * [.enablePush()](#MCReactModule.enablePush)
-    * [.disablePush()](#MCReactModule.disablePush)
-    * [.getSystemToken()](#MCReactModule.getSystemToken) ⇒ <code>Promise.&lt;?string&gt;</code>
-    * [.getAttributes()](#MCReactModule.getAttributes) ⇒ <code>Promise.&lt;Object.&lt;string, string&gt;&gt;</code>
-    * [.setAttribute(key, value)](#MCReactModule.setAttribute)
-    * [.clearAttribute(key)](#MCReactModule.clearAttribute)
-    * [.addTag(tag)](#MCReactModule.addTag)
-    * [.removeTag(tag)](#MCReactModule.removeTag)
-    * [.getTags()](#MCReactModule.getTags) ⇒ <code>Promise.&lt;Array.&lt;string&gt;&gt;</code>
-    * [.setContactKey(contactKey)](#MCReactModule.setContactKey)
-    * [.getContactKey()](#MCReactModule.getContactKey) ⇒ <code>Promise.&lt;?string&gt;</code>
-    * [.enableVerboseLogging()](#MCReactModule.enableVerboseLogging)
-    * [.disableVerboseLogging()](#MCReactModule.disableVerboseLogging)
-    * [.logSdkState()](#MCReactModule.logSdkState)
+<a name="isPushEnabled"></a>
 
-<a name="MCReactModule.isPushEnabled"></a>
-
-### MCReactModule.isPushEnabled() ⇒ <code>Promise.&lt;boolean&gt;</code>
+### isPushEnabled() ⇒ <code>Promise.&lt;boolean&gt;</code>
 The current state of the pushEnabled flag in the native Marketing Cloud
 SDK.
 
-**Kind**: static method of [<code>MCReactModule</code>](#MCReactModule)  
+**Kind**: function
 **Returns**: <code>Promise.&lt;boolean&gt;</code> - A promise to the boolean representation of whether push is
     enabled.  
 **See**
@@ -145,47 +171,47 @@ SDK.
 - [Android Docs](https://salesforce-marketingcloud.github.io/MarketingCloudSDK-Android/javadocs/6.0/reference/com/salesforce/marketingcloud/messages/push/PushMessageManager.html#isPushEnabled())
 - [iOS Docs](https://salesforce-marketingcloud.github.io/MarketingCloudSDK-iOS/appledoc/Classes/MarketingCloudSDK.html#//api/name/sfmc_pushEnabled)
 
-<a name="MCReactModule.enablePush"></a>
+<a name="enablePush"></a>
 
-### MCReactModule.enablePush()
+### enablePush()
 Enables push messaging in the native Marketing Cloud SDK.
 
-**Kind**: static method of [<code>MCReactModule</code>](#MCReactModule)  
+**Kind**: function
 **See**
 
 - [Android Docs](https://salesforce-marketingcloud.github.io/MarketingCloudSDK-Android/javadocs/6.0/reference/com/salesforce/marketingcloud/messages/push/PushMessageManager.html#enablePush())
 - [iOS Docs](https://salesforce-marketingcloud.github.io/MarketingCloudSDK-iOS/appledoc/Classes/MarketingCloudSDK.html#//api/name/sfmc_setPushEnabled:)
 
-<a name="MCReactModule.disablePush"></a>
+<a name="disablePush"></a>
 
-### MCReactModule.disablePush()
+### disablePush()
 Disables push messaging in the native Marketing Cloud SDK.
 
-**Kind**: static method of [<code>MCReactModule</code>](#MCReactModule)  
+**Kind**: function
 **See**
 
 - [Android Docs](https://salesforce-marketingcloud.github.io/MarketingCloudSDK-Android/javadocs/6.0/reference/com/salesforce/marketingcloud/messages/push/PushMessageManager.html#disablePush())
 - [iOS Docs](https://salesforce-marketingcloud.github.io/MarketingCloudSDK-iOS/appledoc/Classes/MarketingCloudSDK.html#//api/name/sfmc_setPushEnabled:)
 
-<a name="MCReactModule.getSystemToken"></a>
+<a name="getSystemToken"></a>
 
-### MCReactModule.getSystemToken() ⇒ <code>Promise.&lt;?string&gt;</code>
+### getSystemToken() ⇒ <code>Promise.&lt;?string&gt;</code>
 Returns the token used by the Marketing Cloud to send push messages to
 the device.
 
-**Kind**: static method of [<code>MCReactModule</code>](#MCReactModule)  
+**Kind**: function
 **Returns**: <code>Promise.&lt;?string&gt;</code> - A promise to the system token string.  
 **See**
 
 - [Android Docs](https://salesforce-marketingcloud.github.io/MarketingCloudSDK-Android/javadocs/6.0/reference/com/salesforce/marketingcloud/messages/push/PushMessageManager.html#getPushToken())
 - [iOS Docs](https://salesforce-marketingcloud.github.io/MarketingCloudSDK-iOS/appledoc/Classes/MarketingCloudSDK.html#//api/name/sfmc_deviceToken)
 
-<a name="MCReactModule.getAttributes"></a>
+<a name="getAttributes"></a>
 
-### MCReactModule.getAttributes() ⇒ <code>Promise.&lt;Object.&lt;string, string&gt;&gt;</code>
+### getAttributes() ⇒ <code>Promise.&lt;Object.&lt;string, string&gt;&gt;</code>
 Returns the maps of attributes set in the registration.
 
-**Kind**: static method of [<code>MCReactModule</code>](#MCReactModule)  
+**Kind**: function  
 **Returns**: <code>Promise.&lt;Object.&lt;string, string&gt;&gt;</code> - A promise to the key/value map of attributes set
     in the registration.  
 **See**
@@ -193,12 +219,12 @@ Returns the maps of attributes set in the registration.
 - [Android Docs](https://salesforce-marketingcloud.github.io/MarketingCloudSDK-Android/javadocs/6.0/reference/com/salesforce/marketingcloud/registration/RegistrationManager.html#getAttributes())
 - [iOS Docs](https://salesforce-marketingcloud.github.io/MarketingCloudSDK-iOS/appledoc/Classes/MarketingCloudSDK.html#//api/name/sfmc_attributes)
 
-<a name="MCReactModule.setAttribute"></a>
+<a name="setAttribute"></a>
 
-### MCReactModule.setAttribute(key, value)
+### setAttribute(key, value)
 Sets the value of an attribute in the registration.
 
-**Kind**: static method of [<code>MCReactModule</code>](#MCReactModule)  
+**Kind**: function 
 **See**
 
 - [Android Docs](https://salesforce-marketingcloud.github.io/MarketingCloudSDK-Android/javadocs/6.0/reference/com/salesforce/marketingcloud/registration/RegistrationManager.Editor.html#setAttribute(java.lang.String,%20java.lang.String))
@@ -210,12 +236,12 @@ Sets the value of an attribute in the registration.
 | key | <code>string</code> | The name of the attribute to be set in the     registration. |
 | value | <code>string</code> | The value of the `key` attribute to be set in     the registration. |
 
-<a name="MCReactModule.clearAttribute"></a>
+<a name="clearAttribute"></a>
 
-### MCReactModule.clearAttribute(key)
+### clearAttribute(key)
 Clears the value of an attribute in the registration.
 
-**Kind**: static method of [<code>MCReactModule</code>](#MCReactModule)  
+**Kind**: function
 **See**
 
 - [Android Docs](https://salesforce-marketingcloud.github.io/MarketingCloudSDK-Android/javadocs/6.0/reference/com/salesforce/marketingcloud/registration/RegistrationManager.Editor.html#clearAttribute(java.lang.String))
@@ -226,10 +252,10 @@ Clears the value of an attribute in the registration.
 | --- | --- | --- |
 | key | <code>string</code> | The name of the attribute whose value should be     cleared from the registration. |
 
-<a name="MCReactModule.addTag"></a>
+<a name="addTag"></a>
 
-### MCReactModule.addTag(tag)
-**Kind**: static method of [<code>MCReactModule</code>](#MCReactModule)  
+### addTag(tag)
+**Kind**: function
 **See**
 
 - [Android Docs](https://salesforce-marketingcloud.github.io/MarketingCloudSDK-Android/javadocs/6.0/reference/com/salesforce/marketingcloud/registration/RegistrationManager.Editor.html#addTag(java.lang.String))
@@ -240,10 +266,10 @@ Clears the value of an attribute in the registration.
 | --- | --- | --- |
 | tag | <code>string</code> | The tag to be added to the list of tags in the     registration. |
 
-<a name="MCReactModule.removeTag"></a>
+<a name="removeTag"></a>
 
-### MCReactModule.removeTag(tag)
-**Kind**: static method of [<code>MCReactModule</code>](#MCReactModule)  
+### removeTag(tag)
+**Kind**: function
 **See**
 
 - [Android Docs](https://salesforce-marketingcloud.github.io/MarketingCloudSDK-Android/javadocs/6.0/reference/com/salesforce/marketingcloud/registration/RegistrationManager.Editor.html#removeTag(java.lang.String))
@@ -254,24 +280,24 @@ Clears the value of an attribute in the registration.
 | --- | --- | --- |
 | tag | <code>string</code> | The tag to be removed from the list of tags in the     registration. |
 
-<a name="MCReactModule.getTags"></a>
+<a name="getTags"></a>
 
-### MCReactModule.getTags() ⇒ <code>Promise.&lt;Array.&lt;string&gt;&gt;</code>
+### getTags() ⇒ <code>Promise.&lt;Array.&lt;string&gt;&gt;</code>
 Returns the tags currently set on the device.
 
-**Kind**: static method of [<code>MCReactModule</code>](#MCReactModule)  
+**Kind**: function 
 **Returns**: <code>Promise.&lt;Array.&lt;string&gt;&gt;</code> - A promise to the array of tags currently set in the native SDK.  
 **See**
 
 - [Android Docs](https://salesforce-marketingcloud.github.io/MarketingCloudSDK-Android/javadocs/6.0/reference/com/salesforce/marketingcloud/registration/RegistrationManager.html#getTags())
 - [iOS Docs](https://salesforce-marketingcloud.github.io/MarketingCloudSDK-iOS/appledoc/Classes/MarketingCloudSDK.html#//api/name/sfmc_tags)
 
-<a name="MCReactModule.setContactKey"></a>
+<a name="setContactKey"></a>
 
-### MCReactModule.setContactKey(contactKey)
+### setContactKey(contactKey)
 Sets the contact key for the device's user.
 
-**Kind**: static method of [<code>MCReactModule</code>](#MCReactModule)  
+**Kind**: function
 **See**
 
 - [Android Docs](https://salesforce-marketingcloud.github.io/MarketingCloudSDK-Android/javadocs/6.0/reference/com/salesforce/marketingcloud/registration/RegistrationManager.Editor.html#setContactKey(java.lang.String))
@@ -282,45 +308,45 @@ Sets the contact key for the device's user.
 | --- | --- | --- |
 | contactKey | <code>string</code> | The value to be set as the contact key of     the device's user. |
 
-<a name="MCReactModule.getContactKey"></a>
+<a name="getContactKey"></a>
 
-### MCReactModule.getContactKey() ⇒ <code>Promise.&lt;?string&gt;</code>
+### getContactKey() ⇒ <code>Promise.&lt;?string&gt;</code>
 Returns the contact key currently set on the device.
 
-**Kind**: static method of [<code>MCReactModule</code>](#MCReactModule)  
+**Kind**: function
 **Returns**: <code>Promise.&lt;?string&gt;</code> - A promise to the current contact key.  
 **See**
 
 - [Android Docs](https://salesforce-marketingcloud.github.io/MarketingCloudSDK-Android/javadocs/6.0/reference/com/salesforce/marketingcloud/registration/RegistrationManager.html#getContactKey())
 - [iOS Docs](https://salesforce-marketingcloud.github.io/MarketingCloudSDK-iOS/appledoc/Classes/MarketingCloudSDK.html#//api/name/sfmc_contactKey)
 
-<a name="MCReactModule.enableVerboseLogging"></a>
+<a name="enableVerboseLogging"></a>
 
-### MCReactModule.enableVerboseLogging()
+### enableVerboseLogging()
 Enables verbose logging within the native Marketing Cloud SDK.
 
-**Kind**: static method of [<code>MCReactModule</code>](#MCReactModule)  
+**Kind**: function
 **See**
 
 - [Android Docs](https://salesforce-marketingcloud.github.io/MarketingCloudSDK-Android/javadocs/6.0/reference/com/salesforce/marketingcloud/MarketingCloudSdk.html#setLogLevel(int))
 - [iOS Docs](https://salesforce-marketingcloud.github.io/MarketingCloudSDK-iOS/appledoc/Classes/MarketingCloudSDK.html#//api/name/sfmc_setDebugLoggingEnabled:)
 
-<a name="MCReactModule.disableVerboseLogging"></a>
+<a name="disableVerboseLogging"></a>
 
-### MCReactModule.disableVerboseLogging()
+### disableVerboseLogging()
 Disables verbose logging within the native Marketing Cloud SDK.
 
-**Kind**: static method of [<code>MCReactModule</code>](#MCReactModule)  
+**Kind**: function
 **See**
 
 - [Android Docs](https://salesforce-marketingcloud.github.io/MarketingCloudSDK-Android/javadocs/6.0/reference/com/salesforce/marketingcloud/MarketingCloudSdk.html#setLogLevel(int))
 - [iOS Docs](https://salesforce-marketingcloud.github.io/MarketingCloudSDK-iOS/appledoc/Classes/MarketingCloudSDK.html#//api/name/sfmc_setDebugLoggingEnabled:)
 
-<a name="MCReactModule.logSdkState"></a>
+<a name="logSdkState"></a>
 
-### MCReactModule.logSdkState()
+### logSdkState()
 Instructs the native SDK to log the SDK state to the native logging system (Logcat for
 Android and Xcode/Console.app for iOS).  This content can help diagnose most issues within
 the SDK and will be requested by the Marketing Cloud support team.
 
-**Kind**: static method of [<code>MCReactModule</code>](#MCReactModule)  
+**Kind**: function
