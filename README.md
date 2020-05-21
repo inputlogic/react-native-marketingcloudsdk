@@ -8,11 +8,18 @@ Release notes for the plugin can be found [here](CHANGELOG.md)
 
 ## Installation
 
-#### 1. Add plugin to your application via [npm](https://www.npmjs.com/package/react-native-marketingcloudsdk)
+#### 1. Add SDK to to your application's package.json
 
-```shell
-npm install react-native-marketingcloudsdk --save
+```javascript
+// ... 
+"dependencies": {
+  // ...
+  "react-native-marketingcloudsdk": "https://github.com/inputlogic/react-native-marketingcloudsdk.git"
+  // ...
+}
+// ...
 ```
+- run `npm install` 
 
 ### Android Setup
 
