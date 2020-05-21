@@ -110,6 +110,11 @@ cd ios
 pod install
 ```
 
+If you run into errors when archiving your build, you may have to complete the following steps:
+- Double check you have updated all your project and pod deployemnt targets to 10.0
+- Under your project *Build Settings*, make sure you display *All* settings at the top of the panel (usually *Basic* is enabled by default)
+- Under *Valid Architectures* double click on your project architecture, and ensure that *armv7* is not present, and if it is, remove it.
+
 #### 2. Configure the SDK in your AppDelegate.m class
 
 ```objc
